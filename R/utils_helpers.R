@@ -34,7 +34,7 @@ make_item_data_frame <- function(top_level_xml){
     xml2::xml_find_first("Spec") %>% xml2::xml_find_first("Sockets") %>%
     xml2::xml_find_all("Socket") %>% xml2::xml_attr("itemId")
 
-  ids_in_use <- top_level_xml %>% xml_find_first("Items") %>%
+  ids_in_use <- top_level_xml %>% xml2::xml_find_first("Items") %>%
     xml2::xml_find_all("Slot") %>%
     xml2::xml_attr("itemId") %>% c(jewels_in_use)
 
