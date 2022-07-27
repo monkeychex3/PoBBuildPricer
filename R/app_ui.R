@@ -10,7 +10,21 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("PoBBuildPricer")
+      titlePanel("Build Pricer"),
+      mainPanel(
+        fluidRow(
+          column(width = 6,
+            textInput("pastebin_link", placeholder = "Pastebin Link", label = "Price Build"),
+            radioButtons("items_to_gather", label = "items of interest",
+              choices = c("all items", "equipped items", "unique items", "equipped uniques")
+            ),
+          ),
+          column(width = 6,
+            br(),
+            actionButton("start", label = "Get Price")
+          )
+        )
+      )
     )
   )
 }
