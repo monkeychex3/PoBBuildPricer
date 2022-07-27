@@ -15,6 +15,14 @@
 
 ## Dependencies ----
 ## Amend DESCRIPTION with dependencies read from package code parsing
+usethis::use_package("xml2")
+usethis::use_package("rvest")
+usethis::use_package("tibble")
+usethis::use_package("httr")
+usethis::use_package("tidyr")
+usethis::use_package("dplyr")
+usethis::use_package("stringr")
+
 attachment::att_amend_desc()
 
 ## Add modules ----
