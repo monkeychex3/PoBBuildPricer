@@ -88,7 +88,7 @@ get_df_of_unique_prices <- function(league){
 
     response_table <- response$lines %>% tibble::enframe() %>%
       dplyr::select(!name) %>% tidyr::unnest_wider(value) %>%
-      dplyr::select(name, icon, baseType,
+      dplyr::select(name, baseType,
         chaosValue, exaltedValue, detailsId)
 
     accumulated_responses <- rbind(accumulated_responses, response_table)

@@ -10,29 +10,40 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      waiter::useWaitress(),
+      tags$head(
+        tags$style(
+          HTML(".shiny-notification {
+             position:fixed;
+             top: calc(0%);
+             left: calc(35%);
+             }
+             "
+          )
+        )
+      ),
       titlePanel("Build Pricer (Poe 3.18)"),
       mainPanel(
         fluidRow(
           column(width = 6,
-            textInput("pastebin_link", placeholder = "Pastebin Link", label = "Price Build"),
-            radioButtons("items_to_gather", label = "items of interest (just for show at the moment)",
-              choices = c("all items", "equipped items", "unique items", "equipped uniques")
-            ),
+            textInput("pastebin_link", placeholder = "Pastebin Link", label = "Price Build")
           ),
-          column(width = 6,
+          column(width = 2,
             br(),
             actionButton("start", label = "Get Price")
-          )
+          ),
+          column(width = 4,
+            radioButtons("items_to_gather", label = "items of interest (just for show at the moment)",
+            choices = c("all items", "equipped items", "unique items", "equipped uniques")
+          ))
         ),
         fluidRow(
           DT::dataTableOutput("build_items")
         ),
-        br(),
-        h3("Price table below, Build items above"),
-        fluidRow(
-          DT::dataTableOutput("price_table")
-        )
+        br()#,
+        # h3("Price table below, Build items above"),
+        # fluidRow(
+        #   DT::dataTableOutput("price_table")
+        # )
       )
     )
   )
