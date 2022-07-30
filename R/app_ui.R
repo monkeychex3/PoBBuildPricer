@@ -24,7 +24,7 @@ app_ui <- function(request) {
       titlePanel("Build Pricer (Poe 3.18)"),
       mainPanel(
         fluidRow(
-          column(width = 6,
+          column(width = 4,
             textInput("pastebin_link", placeholder = "Pastebin Link", label = "Price Build")
           ),
           column(width = 2,
@@ -32,18 +32,21 @@ app_ui <- function(request) {
             actionButton("start", label = "Get Price")
           ),
           column(width = 4,
-            radioButtons("items_to_gather", label = "items of interest (just for show at the moment)",
-            choices = c("all items", "equipped items", "unique items", "equipped uniques")
-          ))
+            # man ,I'd like to make this input into 2 columns
+            checkboxGroupInput("filtering", label = "Show",
+              choiceNames = c("Equipped", "Unequipped", "Unique", "Rare", "Magic"),
+              choiceValues = c("yes", "no", "UNIQUE", "RARE", "MAGIC"),
+              selected = c("yes", "UNIQUE", "RARE")
+            )
+          )
         ),
         fluidRow(
           DT::dataTableOutput("build_items")
         ),
-        br()#,
-        # h3("Price table below, Build items above"),
-        # fluidRow(
-        #   DT::dataTableOutput("price_table")
-        # )
+        br(),
+        fluidRow(
+          DT::dataTableOutput("test_table")
+        )
       )
     )
   )

@@ -44,7 +44,7 @@ make_item_data_frame <- function(top_level_xml){
       pattern = "Rarity:[:space:].+\\n.+\\n.+\\n") %>%
     unlist() %>% stringr::str_split(pattern = "\\n", simplify = TRUE) %>%
     as.data.frame() %>% dplyr::select(
-      "rarity" = V1, "name" = V2, base = "V3") %>%
+      "rarity" = V1, "name" = V2, "base" = V3) %>%
     dplyr::mutate(
       rarity = gsub(pattern = "Rarity: ", replacement = "", x = rarity))
 
@@ -95,4 +95,49 @@ get_df_of_unique_prices <- function(league){
   }
 
   return(accumulated_responses)
+}
+
+#' @description This hits al of the poe ninja api links and gets an overview of
+#' equippable uniques
+#'
+#' @param fun a shiny input function
+#'
+#' @param len how many times to make that input
+#'
+#' @param id input basic name (suffixes get added to these)
+#'
+#' @param value starting value for each input
+#'
+#' @param ... args to feed to fun
+#'
+#' @return a list of shinyInputs
+#'
+#' @noRd
+#'
+
+shinyInput = function(FUN, len, id, value, ...) {
+  if (length(value) == 1) value <- rep(value, len)
+  inputs = character(len)
+  for (i in seq_len(len)) {
+    inputs[i] = as.character(FUN(paste0(id, i), label = NULL, value = value[i]))
+  }
+  inputs
+}
+
+#' @description This hits al of the poe ninja api links and gets an overview of
+#' equippable uniques
+#'
+#' @param id input basic name (suffixes get read from these)
+#'
+#' @param len how many of those inputs to read
+#'
+#' @return a list of values from those shintInputs
+#'
+#' @noRd
+
+shinyValue = function(id, len) {
+  unlist(lapply(seq_len(len), function(i) {
+    value = input[[paste0(id, i)]]
+    if (is.null(value)) TRUE else value
+  }))
 }
